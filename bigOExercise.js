@@ -26,7 +26,7 @@ function hasCommonItem(array1, array2) {
   return false;
 }
 
-// console.log(hasCommonItem(["a", "b", "c", "d"], ["g", "x", "d", "j"]));
+console.log(hasCommonItem(["a", "b", "c", "d"], ["g", "x", "d", "j"]));
 
 // This solution is better (in terms of speed) because its time complexity is O(n + m)
 // it has a space complexity of O(n) because it involves creating an object with n number of properties
@@ -50,3 +50,16 @@ function hasCommonItem2(array1, array2) {
 }
 
 console.log(hasCommonItem2(["a", "b", "c", "d"], ["g", "x", "d", "j"]));
+
+// this function has a time complexity of O(n + m), and also the same space complexity
+// the big O of array spread operation is O(n)
+// this solution is more readable than the previous one
+function hasCommonItem3(array1, array2) {
+  // creating an array that is the combination of the two arrays
+  const combinedArray = [...array1, ...array2];
+  // creating a set from the combined array, and comparing the size of that set with the combined array's length
+  // if the set size and array length are not equal, then that means array 1 and array 2 had at least one common item
+  return new Set(combinedArray).size !== combinedArray.length;
+}
+
+console.log(hasCommonItem3(["a", "b", "c", "d"], ["g", "x", "d", "j"]));
