@@ -123,3 +123,60 @@ console.log(getFirstRecurringCharacter3([2, 5, 1, 2, 3, 5, 1, 2, 4]));
 console.log(getFirstRecurringCharacter3([2, 1, 1, 2, 3, 5, 1, 2, 4]));
 console.log(getFirstRecurringCharacter3([2, 3, 4, 5]));
 console.log(getFirstRecurringCharacter3(["a", "b", "c", "c", "e"]));
+
+/* Exercise - Unique elements
+Write a function that takes an array and returns a new array containing the unique elements.
+If you have an array ['cat', 'dog', 'cat', 'rat', 'dog'], then the returned array should be ['cat', 'dog', 'rat']
+*/
+
+// Naive solution -> time complexity O(n^2), space complexity O(n)
+function getUniqueElements(array) {
+  if (!Array.isArray(array)) return "Invalid input";
+  if (array.length === 0) return [];
+
+  const uniqueArray = [];
+
+  for (let i = 0; i < array.length; i++) {
+    let isDuplicate = false;
+    for (let j = 0; j < uniqueArray.length; j++) {
+      if (array[i] === uniqueArray[j]) isDuplicate = true;
+    }
+
+    if (!isDuplicate) uniqueArray.push(array[i]);
+  }
+
+  return uniqueArray;
+}
+
+console.log(getUniqueElements(["cat", "dog", "cat", "rat", "dog"]));
+console.log(getUniqueElements([1, 5, 2, 6, 5, 2, 3]));
+console.log(getUniqueElements([1, 2, 3, 4, 5]));
+console.log(getUniqueElements(10));
+console.log(getUniqueElements([]));
+
+// In this solution, both the time and space complexities are O(n)
+function getUniqueElements2(array) {
+  if (!Array.isArray(array)) return "Invalid input";
+  if (array.length === 0) return [];
+
+  const uniqueArray = [];
+  const uniqueItemsObj = {};
+
+  for (const item of array) {
+    // if a property with the same name as the item is not present in the object
+    if (!uniqueItemsObj[item]) {
+      // create a property with the same name as the item and give it a boolean true value
+      uniqueItemsObj[item] = true;
+      // push that item into the array
+      uniqueArray.push(item);
+    }
+  }
+
+  return uniqueArray;
+}
+
+console.log(getUniqueElements2(["cat", "dog", "cat", "rat", "dog"]));
+console.log(getUniqueElements2([1, 5, 2, 6, 5, 2, 3]));
+console.log(getUniqueElements2([1, 2, 3, 4, 5]));
+console.log(getUniqueElements2(10));
+console.log(getUniqueElements2([]));
