@@ -122,16 +122,15 @@ class LinkedList {
 
     // if index is 0, then it is the same as prepending to the list
     if (index === 0) return this.prepend(value);
-    // if index is the last index, then it is the same as appending to the list
-    if (index === this.length - 1) return this.append(value);
 
     const newNode = new ListNode(value);
 
     // the new node will be inserted after the preceding node
     // suppose we want to insert a node at index 2; for that, we need the node at index 1
     const precedingNode = this._traverseAndGetNode(index - 1);
+    const subsequentNode = precedingNode.next;
     // the new node needs to point to the node that is currently next to the preceding node
-    newNode.next = precedingNode.next;
+    newNode.next = subsequentNode;
     // the preceding node needs to point to the new node
     precedingNode.next = newNode;
     this.length++;
@@ -143,6 +142,9 @@ class LinkedList {
     // validating the index
     const indexIsValid = this._validateIndex(index);
     if (!indexIsValid) return console.log("Invalid index");
+
+    // if the linked list is empty
+    if (this.length === 0) return console.log("List is empty");
 
     // if the linked list has only 1 node
     if (this.length === 1) {
@@ -158,7 +160,7 @@ class LinkedList {
 
     // remove from the beginning (if index is 0)
     if (index === 0) this.head = this.head.next;
-    // remove from the end (if the index is the last index)
+    // remove from the end (if the index is the last index, i.e. we want to remove the current tail node)
     else if (index === this.length - 1) {
       // the preceding node needs to point to null (this node is the tail node now)
       precedingNode.next = null;

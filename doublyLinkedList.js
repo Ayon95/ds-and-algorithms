@@ -71,8 +71,6 @@ class DoublyLinkedList {
 
     const newNode = new ListNode(value);
 
-    // if the linked list is empty
-    if (this.length === 0) return this._addToEmptyList(newNode);
     // if the index is 0 then it is the same as adding a node at the beginning
     if (index === 0) return this.prepend(value);
 
@@ -101,6 +99,7 @@ class DoublyLinkedList {
       this.head = null;
       this.tail = null;
     }
+
     // if the index is that of the last node (tail node), i.e. if we want to delete the tail node
     else if (index === this.length - 1) {
       const secondLastNode = this.tail.previous;
