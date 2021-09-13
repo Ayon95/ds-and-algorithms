@@ -123,6 +123,9 @@ class LinkedList {
     // if index is 0, then it is the same as prepending to the list
     if (index === 0) return this.prepend(value);
 
+    // if index is the last index, then it is the same as appending to the list
+    if (index === this.length - 1) return this.append(value);
+
     const newNode = new ListNode(value);
 
     // the new node will be inserted after the preceding node

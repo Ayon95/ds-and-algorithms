@@ -74,6 +74,9 @@ class DoublyLinkedList {
     // if the index is 0 then it is the same as adding a node at the beginning
     if (index === 0) return this.prepend(value);
 
+    // if index is the last index, then it is the same as appending to the list
+    if (index === this.length - 1) return this.append(value);
+
     const precedingNode = this._traverseAndGetNode(index - 1);
     const subsequentNode = precedingNode.next;
     // the next pointer of the new node needs to point to the node that is currently next to the preceding node
@@ -99,6 +102,14 @@ class DoublyLinkedList {
       this.head = null;
       this.tail = null;
     }
+    // if we want to delete the first node (the current head node)
+    else if (index === 0) {
+      const secondElement = this.head.next;
+      // the second node's previous pointer needs to point to null
+      secondElement.previous = null;
+      // the second node is now the first node (head node)
+      this.head = secondElement;
+    }
 
     // if the index is that of the last node (tail node), i.e. if we want to delete the tail node
     else if (index === this.length - 1) {
@@ -107,6 +118,7 @@ class DoublyLinkedList {
       secondLastNode.next = null;
       // this node is the tail node now
       this.tail = secondLastNode;
+      // if the index is somewhere in the middle
     } else {
       const nodeToDelete = this._traverseAndGetNode(index);
       // the node that comes before the node that we want to delete
@@ -140,9 +152,17 @@ class DoublyLinkedList {
 
 const myDoublyLinkedList = new DoublyLinkedList(10);
 myDoublyLinkedList.append(5);
+myDoublyLinkedList.append(16);
+
 myDoublyLinkedList.prepend(1);
+
 myDoublyLinkedList.insert(2, 15);
+myDoublyLinkedList.insert(0, 100);
+myDoublyLinkedList.insert(myDoublyLinkedList.length - 1, 200);
+
+myDoublyLinkedList.remove(0);
 myDoublyLinkedList.remove(myDoublyLinkedList.length - 1);
-myDoublyLinkedList.remove(1);
+myDoublyLinkedList.remove(2);
+
 console.log(myDoublyLinkedList);
 console.log(myDoublyLinkedList.toArray());
