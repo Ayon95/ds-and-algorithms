@@ -206,6 +206,37 @@ class LinkedList {
 
     return this;
   }
+
+  // this method for reversing a singly-linked list is more optimized than the previous one
+  // it has a time complexity of O(n) and its space complexity is O(1)
+  reverse2() {
+    // if the linked list has only one node or the list is empty, then simply return the linked list as is
+    if (this.length <= 1) return this;
+
+    // initial setup
+    let previousNode = null;
+    let currentNode = this.head;
+    let nextNode = null;
+
+    while (currentNode !== null) {
+      // save a reference to the next node so that we know where to go next
+      nextNode = currentNode.next;
+      // make the current node point to the previous node (reversing)
+      // this is where we are reversing the pointer (switching the pointer direction)
+      currentNode.next = previousNode;
+      // advance the previous and current node
+      // the previous node becomes the current node and the current node becomes the next node
+      previousNode = currentNode;
+      currentNode = nextNode;
+    }
+    // the tail node of the reversed list will be the head node of the unreversed list
+    // note that in the first iteration, we are making the head node of the unreversed list point to null (currentNode.next = previousNode)
+    this.tail = this.head;
+    // at the end of the loop, the previous node will become the head node of the reversed list
+    this.head = previousNode;
+
+    return this;
+  }
 }
 
 const myLinkedList = new LinkedList(10);
@@ -223,7 +254,8 @@ myLinkedList.remove(0);
 myLinkedList.remove(myLinkedList.length - 1);
 myLinkedList.remove(2);
 
-myLinkedList.reverse();
+// myLinkedList.reverse();
+myLinkedList.reverse2();
 
 console.log(myLinkedList);
 console.log(myLinkedList.toArray());
