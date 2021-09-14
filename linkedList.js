@@ -176,6 +176,36 @@ class LinkedList {
     }
     this.length--;
   }
+
+  /* this method reverses the list
+  Suppose, you have a linked list 1-->10-->5--16. If you reverse it, it will be 16-->5-->10-->1
+  the time complexity of this method is O(n)
+  the space complexity is O(n) 
+  */
+  reverse() {
+    // get the array containing the values of all the nodes
+    const valuesArray = this.toArray();
+
+    // if the linked list has only one node or the list is empty, then simply return the linked list as is
+    if (valuesArray.length <= 1) return this;
+
+    // reset the linked list and populate it based on looping through the array backwards
+    for (let i = valuesArray.length - 1; i >= 0; i--) {
+      // in the first iteration, we are resetting the linked list
+      // the tail node of the normal linked list will be the head of the reversed linked list
+      if (i === valuesArray.length - 1) {
+        this.head = new ListNode(valuesArray[i]);
+        this.tail = this.head;
+        this.length = 1;
+        continue;
+      }
+
+      // in all other iterations, we are creating a node and appending it to the linked list
+      this.append(valuesArray[i]);
+    }
+
+    return this;
+  }
 }
 
 const myLinkedList = new LinkedList(10);
@@ -192,6 +222,8 @@ myLinkedList.insert(myLinkedList.length - 1, 200);
 myLinkedList.remove(0);
 myLinkedList.remove(myLinkedList.length - 1);
 myLinkedList.remove(2);
+
+myLinkedList.reverse();
 
 console.log(myLinkedList);
 console.log(myLinkedList.toArray());
