@@ -20,6 +20,7 @@ class Stack {
   }
 
   // this method adds an element at the top of the stack
+  //   O(1) time complexity, O(1) space complexity
   push(value) {
     const newNode = new StackNode(value);
     // the new node needs to point to the current top node
@@ -30,6 +31,7 @@ class Stack {
   }
 
   // this method removes the topmost element
+  // O(1) time complexity, O(1) space complexity
   pop() {
     //   if the stack is empty then there is nothing to remove
     if (this.length === 0) return console.log("Stack is empty");
@@ -50,14 +52,63 @@ class Stack {
   }
 }
 
-const myStack = new Stack();
+// const myStack = new Stack();
 
-myStack.push("Google");
-myStack.push("Facebook");
-myStack.push("YouTube");
+// myStack.push("Google");
+// myStack.push("Facebook");
+// myStack.push("YouTube");
 
-myStack.pop();
-myStack.pop();
+// myStack.pop();
+// myStack.pop();
 
-console.log(myStack.isEmpty());
-console.log(myStack);
+// console.log(myStack.isEmpty());
+// console.log(myStack);
+
+/* Stack implementation using array */
+
+class Stack2 {
+  constructor() {
+    // initially the stack will be empty
+    this._data = [];
+    this.length = 0;
+    this.top = null;
+  }
+
+  peek() {
+    // the last item in the array will be the topmost item
+    return this._data[this._data.length - 1];
+  }
+
+  push(value) {
+    this._data.push(value);
+    this.top = value;
+    this.length++;
+  }
+
+  pop() {
+    if (this.length === 0) return console.log("Stack is empty");
+    const deletedItem = this._data.pop();
+    // if the stack has only 1 item, then the top will be null, otherwise the top will be the item below the current top item
+    this.top = this.length === 1 ? null : this._data[this.length - 2];
+    this.length--;
+    // returning the removed item
+    return deletedItem;
+  }
+
+  isEmpty() {
+    return this.length === 0;
+  }
+}
+
+const myStack2 = new Stack2();
+
+myStack2.push("Google");
+myStack2.push("Facebook");
+myStack2.push("YouTube");
+
+myStack2.pop();
+myStack2.pop();
+
+console.log(myStack2.isEmpty());
+console.log(myStack2);
+console.log(myStack2.peek());
