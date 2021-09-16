@@ -67,15 +67,90 @@ class Queue {
 
 const myQueue = new Queue();
 
-myQueue.enqueue("Joy");
-myQueue.enqueue("Matt");
-myQueue.enqueue("Pavel");
-myQueue.enqueue("Samir");
+// myQueue.enqueue("Joy");
+// myQueue.enqueue("Matt");
+// myQueue.enqueue("Pavel");
+// myQueue.enqueue("Samir");
 
-myQueue.dequeue();
-myQueue.dequeue();
-myQueue.dequeue();
-myQueue.dequeue();
+// myQueue.dequeue();
+// myQueue.dequeue();
+// myQueue.dequeue();
+// myQueue.dequeue();
 
-console.log(myQueue.isEmpty());
-console.log(myQueue);
+// console.log(myQueue.isEmpty());
+// console.log(myQueue);
+
+/* Implement queue with two stacks
+
+- The push stack will contain enqueued items
+- The pop stack will contain items ready to be dequeued
+- When we want to dequeue, we remove the items from the push stack and push it into the pop stack
+- Then we pop the topmost item from the pop stack (the dequeued item)
+    - the items in the pop stack will be in the order that we want
+    - the items in the pop stack will be ready to be dequeued
+- If the pop stack is empty, then we check if the push stack has any items that can be moved to the pop stack
+- If the push stack is also empty, then that means, the queue is empty
+*/
+
+class Queue2 {
+  constructor() {
+    // initially, the queue will be empty
+    this.pushStack = [];
+    this.popStack = [];
+    this.length = 0;
+  }
+
+  peek() {
+    //   if both stacks are empty, then return null
+    if (this.length === 0) return null;
+    // if the pop stack is empty and the push stack is not empty, then the first item in the queue is the bottommost item in the push stack,
+    // the bottommost item in the push stack is the first item in the pushStack array
+    if (this.popStack.length === 0) {
+      return this.pushStack[0];
+    }
+    // if both stacks have items, then the first item in the queue is the topmost item in the pop stack
+    // the topmost item in the pop stack is the last item in the popStack array
+    return this.popStack[this.popStack.length - 1];
+  }
+
+  enqueue(value) {
+    this.pushStack.push(value);
+    this.length++;
+  }
+
+  dequeue() {
+    //   if both stacks are empty, then there's nothing to remove
+    if (this.length === 0) return null;
+    //   check if pop stack is empty (and push stack has items)
+    if (this.popStack.length === 0) {
+      // need to save the number of pushStack items in a variable so that we know how many times to iterate
+      const pushStackItems = this.pushStack.length;
+      // remove the items from the push stack (top to bottom) and add them to the pop stack
+      for (let i = 0; i < pushStackItems; i++) {
+        this.popStack.push(this.pushStack.pop());
+      }
+    }
+    // pop off the topmost item from the pop stack (last item in the popStack array)
+    this.length--;
+    return this.popStack.pop();
+  }
+
+  isEmpty() {
+    return this.length === 0;
+  }
+}
+
+const myQueue2 = new Queue2();
+
+myQueue2.enqueue("Joy");
+myQueue2.enqueue("Matt");
+myQueue2.enqueue("Pavel");
+myQueue2.enqueue("Samir");
+
+myQueue2.dequeue();
+myQueue2.dequeue();
+myQueue2.dequeue();
+myQueue2.dequeue();
+
+console.log(myQueue2.isEmpty());
+console.log(myQueue2);
