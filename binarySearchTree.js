@@ -118,9 +118,11 @@ class BinarySearchTree {
   // this function will be used to get the successor node that will replace the removed node having two child nodes
   // the successor node is the smallest node that is larger than the node to remove
   _getSuccessorNode(nodeToRemove) {
+    // the in-order successor of the node to be removed will be in the right subtree
     let currentNode = nodeToRemove.right;
     let previousNode = nodeToRemove;
-    // keep looping until a node without a left child node is reached
+    // keep looping and going left until a node without a left child node is reached
+    // the in-order successor will be the leftmost node in the right subtree of the node to be deleted
     while (true) {
       if (currentNode.left === null)
         return { successorNode: currentNode, parentOfSuccessor: previousNode };
@@ -152,7 +154,7 @@ class BinarySearchTree {
     // if the node to remove has two child nodes, then remove that node
     // if the successor node had any child node, then it will be the child of the removed node's child node
     if (nodeToRemove.left !== null && nodeToRemove.right !== null) {
-      // the smallest node that is larger than the removed node becomes the successor (the right side)
+      // getting the in-order successor of the node that we want to remove
       const { successorNode, parentOfSuccessor } =
         this._getSuccessorNode(nodeToRemove);
       // if the node to remove is the root node
@@ -165,20 +167,18 @@ class BinarySearchTree {
       if (nodeToRemove.value < parentOfNodeToRemove.value) {
         parentOfNodeToRemove.left = successorNode;
       } else parentOfNodeToRemove.right = successorNode;
-      // any child nodes of the removed node will become the children of the successor node
+      // the left child node of the removed node will become the left child of the successor
       successorNode.left = nodeToRemove.left;
       // checking if the successor has a different parent than the node to remove
       // the successor will have a different parent when it is down multiple levels from the node to remove
-      // if the parent of the successor is the same as the node to remove, then the successor node will not have any right child
-      if (parentOfSuccessor.value === nodeToRemove.value) {
-        successorNode.right = null;
-        // otherwise, the parent of successor will no longer have a left child if the successor doesn't have a right child
+      if (parentOfSuccessor.value !== nodeToRemove.value) {
         // if the successor has a right child, then it will become the left child of the successor's parent
-      } else {
+        // otherwise, the parent of successor will no longer have a left child
         parentOfSuccessor.left = successorNode.right
           ? successorNode.right
           : null;
-        successorNode.right = nodeToRemove.right;
+        // the successor's right child will become the node that was previously its parent
+        successorNode.right = parentOfSuccessor;
       }
       return;
     }
@@ -187,7 +187,7 @@ class BinarySearchTree {
     const childOfNodeToRemove = nodeToRemove.left || nodeToRemove.right;
     // if the node to remove is the root node (and it has one child node)
     if (parentOfNodeToRemove === null) this.root = childOfNodeToRemove;
-    // if the node to remove has one child, then the child node (successor) of the removed node should become the child of the removed node's parent node
+    // if the node to remove has one child, then the child node of the removed node should become the child of the removed node's parent node
     else if (nodeToRemove.value < parentOfNodeToRemove.value) {
       parentOfNodeToRemove.left = childOfNodeToRemove;
     } else parentOfNodeToRemove.right = childOfNodeToRemove;
