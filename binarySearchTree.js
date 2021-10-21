@@ -21,29 +21,21 @@ class BinarySearchTree {
   // this should return the node that we are looking for
   // return null if the node doesn't exist
   lookup(value) {
-    //   if the tree does not have any node, then return null
+    // if the tree does not have any node, then return null
     if (this.root === null) return null;
     // start lookup from the root node
     let currentNode = this.root;
-    // keep looping until the desired node is found, or it has been determined that the node with the given value doesn't exist
-    while (true) {
+    // keep looping as long as there is a current node and the desired node is found
+    while (currentNode) {
       // if the value is equal to the current node's value, then return the current node
       if (value === currentNode.value) return currentNode;
       // if the value is less than the current node's value, we go to its left
-      if (value < currentNode.value) {
-        // if the current node doesn't have a left node, then that means the given value doesn't exist
-        if (currentNode.left === null) return null;
-        // otherwise, the left node becomes the current node
-        currentNode = currentNode.left;
-      }
+      if (value < currentNode.value) currentNode = currentNode.left;
       // if the value is greater than the current node's value, we go to its right
-      if (value > currentNode.value) {
-        // if the current node doesn't have a right node, then that means the given value doesn't exist
-        if (currentNode.right === null) return null;
-        // otherwise, the right node becomes the current node
-        currentNode = currentNode.right;
-      }
+      if (value > currentNode.value) currentNode = currentNode.right;
     }
+    // if we reach this point, then that means the node with the given value doesn't exist
+    return null;
   }
 
   insert(value) {
