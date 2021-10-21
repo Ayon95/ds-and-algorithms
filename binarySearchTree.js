@@ -123,13 +123,12 @@ class BinarySearchTree {
     let previousNode = nodeToRemove;
     // keep looping and going left until a node without a left child node is reached
     // the in-order successor will be the leftmost node in the right subtree of the node to be deleted
-    while (true) {
-      if (currentNode.left === null)
-        return { successorNode: currentNode, parentOfSuccessor: previousNode };
-      // otherwise, go to the left node
+    while (currentNode.left) {
+      // as long as there is a left node, keep going to the left
       previousNode = currentNode;
       currentNode = currentNode.left;
     }
+    return { successorNode: currentNode, parentOfSuccessor: previousNode };
   }
 
   remove(value) {
@@ -153,7 +152,7 @@ class BinarySearchTree {
 
     // if the node to remove has two child nodes, then remove that node
     // if the successor node had any child node, then it will be the child of the removed node's child node
-    if (nodeToRemove.left !== null && nodeToRemove.right !== null) {
+    if (nodeToRemove.left && nodeToRemove.right) {
       // getting the in-order successor of the node that we want to remove
       const { successorNode, parentOfSuccessor } =
         this._getSuccessorNode(nodeToRemove);
@@ -177,8 +176,8 @@ class BinarySearchTree {
         parentOfSuccessor.left = successorNode.right
           ? successorNode.right
           : null;
-        // the successor's right child will become the node that was previously its parent
-        successorNode.right = parentOfSuccessor;
+        // the successor's right child will become the right subtree of the node to remove
+        successorNode.right = nodeToRemove.right;
       }
       return;
     }
@@ -201,6 +200,8 @@ tree.insert(20);
 tree.insert(1);
 tree.insert(6);
 tree.insert(5);
+tree.insert(4.5);
+tree.insert(5.5);
 tree.insert(15);
 tree.insert(170);
 
