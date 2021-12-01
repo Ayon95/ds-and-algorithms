@@ -183,6 +183,16 @@ class BinarySearchTree {
       parentOfNodeToRemove.left = childOfNodeToRemove;
     } else parentOfNodeToRemove.right = childOfNodeToRemove;
   }
+
+  // using recursion to traverse the tree
+  traverse(node = this.root) {
+    if (!node) return null;
+    return {
+      value: node.value,
+      left: this.traverse(node.left),
+      right: this.traverse(node.right),
+    };
+  }
 }
 
 const tree = new BinarySearchTree();
@@ -213,4 +223,4 @@ console.log(tree.lookup(170));
 // tree.remove(9);
 // tree.remove(15);
 
-console.log(JSON.stringify(tree));
+console.log(tree.traverse());
