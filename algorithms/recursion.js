@@ -83,3 +83,26 @@ function findFibNumberIterative2(index) {
 console.log(findFibNumberRecursive(6));
 console.log(findFibNumberIterative(6));
 console.log(findFibNumberIterative2(6));
+
+/* Reverse a string */
+
+// Iterative approach
+function reverseStringIterative(str) {
+  if (str.length <= 1) return str;
+  let reversedString = "";
+  for (let i = str.length - 1; i >= 0; i--) {
+    reversedString += str[i];
+  }
+  return reversedString;
+}
+
+console.log(reverseStringIterative("hello"));
+
+function reverseStringRecursive(str) {
+  if (str.length <= 1) return str;
+  const lastCharacter = str[str.length - 1];
+  const remainingCharacters = str.substring(0, str.length - 1);
+  return lastCharacter + reverseStringIterative(remainingCharacters);
+}
+
+console.log(reverseStringRecursive("hello"));
