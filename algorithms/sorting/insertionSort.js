@@ -27,3 +27,24 @@ console.log(sort([2, 6, 4, 5, 7, 3, 1]));
 console.log(sort([1, 2, 3, 4, 5]));
 // worst case
 console.log(sort([5, 4, 3, 2, 1]));
+
+// Alternative solution using while loop
+
+function sort2(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    const firstUnsortedItem = arr[i];
+    let j = i - 1;
+    while (arr[j + 1] < arr[j]) {
+      arr[j + 1] = arr[j];
+      arr[j] = firstUnsortedItem;
+      j--;
+    }
+  }
+  return arr;
+}
+
+console.log(sort2([2, 6, 4, 5, 7, 3, 1]));
+// best case
+console.log(sort2([1, 2, 3, 4, 5]));
+// worst case
+console.log(sort2([5, 4, 3, 2, 1]));
