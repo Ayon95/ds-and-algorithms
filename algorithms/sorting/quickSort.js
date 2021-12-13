@@ -1,3 +1,5 @@
+// O(n - 1) ~ O(n) worst-case time complexity
+// O(1) space complexity
 function partition(arr, start, end) {
   // selecting the last element as the pivot
   const pivot = arr[end];
@@ -20,6 +22,10 @@ function partition(arr, start, end) {
   return pivotIndex;
 }
 
+// Best and average-case time complexity -> O(n log n)
+// Worst-case time complexity -> O(n^2)
+// Best and average-case space complexity-> O(log n)
+// Worst case space complexity -> O(n)
 function sort(arr, start, end) {
   // simply return if the partition space has only 1 item, or it's an invalid partition space
   if (start >= end) return;
