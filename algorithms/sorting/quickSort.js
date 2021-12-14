@@ -1,3 +1,10 @@
+// helper function that swaps the positions of two elements in an array
+function swap(arr, first, second) {
+  const temp = arr[first];
+  arr[first] = arr[second];
+  arr[second] = temp;
+}
+
 // O(n - 1) ~ O(n) worst-case time complexity
 // O(1) space complexity
 function partition(arr, start, end) {
@@ -9,15 +16,12 @@ function partition(arr, start, end) {
   for (let i = start; i < end; i++) {
     if (arr[i] <= pivot) {
       //   swap the element at i with the element at pivot index
-      let temp = arr[i];
-      arr[i] = arr[pivotIndex];
-      arr[pivotIndex] = temp;
+      swap(arr, i, pivotIndex);
       pivotIndex++;
     }
   }
   // swap the pivot element with the element at the pivot index
-  arr[end] = arr[pivotIndex];
-  arr[pivotIndex] = pivot;
+  swap(arr, end, pivotIndex);
 
   return pivotIndex;
 }
@@ -37,7 +41,7 @@ function sort(arr, start, end) {
 }
 
 const arr1 = [2, 6, 4, 5, 7, 3, 1];
-const arr2 = [5, 4, 3, 2, 1];
+const arr2 = [99, 44, 6, 2, 1, 5, 63, 87, 283, 4, 0];
 
 sort(arr1, 0, arr1.length - 1);
 sort(arr2, 0, arr2.length - 1);
