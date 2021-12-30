@@ -21,6 +21,7 @@ class Queue {
   }
 
   //   add a node at the end of the queue
+  // time complexity -> O(1)
   enqueue(value) {
     const newNode = new QueueNode(value);
     //   if the queue is empty, then the newly-added node will be the first and the last node
@@ -38,6 +39,7 @@ class Queue {
   }
 
   // remove the first node of the queue
+  // time complexity -> O(1)
   dequeue() {
     //   if the queue is empty, then there's nothing to remove
     if (this.length === 0) return null;
@@ -113,11 +115,14 @@ class Queue2 {
     return this.popStack[this.popStack.length - 1];
   }
 
+  // time complexity -> O(1)
   enqueue(value) {
     this.pushStack.push(value);
     this.length++;
   }
 
+  // worst-case time complexity -> O(n)
+  // amortized time complexity -> O(1) because most of the time, there will be items in the pop stack ready to be dequeued
   dequeue() {
     //   if both stacks are empty, then there's nothing to remove
     if (this.length === 0) return null;
