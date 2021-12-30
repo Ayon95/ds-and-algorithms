@@ -28,4 +28,21 @@ function traverseLevelOrder(tree) {
   }
 }
 
+// Time complexity -> O(n)
+// Space complexity -> O(n)
+// However, space requirement is more than the iterative approach because the recursive function calls need to be stored on the call stack
+function traverseLevelOrderRecursive(queue) {
+  if (queue.length === 0) return;
+  const currentNode = queue.dequeue();
+  console.log(currentNode.value);
+  if (currentNode.left !== null) queue.enqueue(currentNode.left);
+  if (currentNode.right !== null) queue.enqueue(currentNode.right);
+  traverseLevelOrderRecursive(queue);
+}
+
 traverseLevelOrder(tree);
+
+const queue = new Queue();
+queue.enqueue(tree.root);
+
+traverseLevelOrderRecursive(queue);
