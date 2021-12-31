@@ -67,50 +67,28 @@ function mergeArrays2(array1, array2) {
   if (array2.length === 0) return array1;
 
   const mergedArray = [];
-
   // starting from the first items
-  let array1Item = array1[0];
-  let array2Item = array2[0];
-
   let i = 0;
   let j = 0;
-
-  // the while loop will run as long as there is either array1 item or array2 item
-  while (array1Item !== undefined || array2Item !== undefined) {
-    // condition for adding array1 item to merged array
-    // if array2 item is undefined, then it means all items from array2 have been added
-    if (array2Item === undefined || array1Item < array2Item) {
-      mergedArray.push(array1Item);
-
+  // the while loop will run as long as there are items in either array1 or array2
+  while (array1[i] !== undefined || array2[j] !== undefined) {
+    // if array2 item doesn't exist, then it means all items from array2 have been added
+    if (array2[j] === undefined || array1[i] < array2[j]) {
+      mergedArray.push(array1[i]);
       // go to the next item in array1
       i++;
-      array1Item = array1[i];
-    }
-
-    // condition for adding both array items
-    else if (array1Item === array2Item) {
-      mergedArray.push(array1Item);
-      mergedArray.push(array2Item);
-
-      // go to the next items
+    } else if (array1[i] === array2[j]) {
+      mergedArray.push(array1[i]);
+      mergedArray.push(array2[j]);
       i++;
       j++;
-
-      array1Item = array1[i];
-      array2Item = array2[j];
     }
-
-    // condition for adding array2 item to merged array
-    // if array1 item is undefined, then it means all items from array1 have been added
-    else if (array1Item === undefined || array1Item > array2Item) {
-      mergedArray.push(array2Item);
-
-      // go to the next item in array1
+    // if array1 item doesn't exist, then it means all items from array1 have been added
+    else if (array1[i] === undefined || array1[i] > array2[j]) {
+      mergedArray.push(array2[j]);
       j++;
-      array2Item = array2[j];
     }
   }
-
   return mergedArray;
 }
 
