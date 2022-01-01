@@ -60,12 +60,15 @@ const validBST = {
   },
 };
 
-// Time complexity -> O(n) worst case
+// Time complexity -> O(n)
 // Space complexity -> O(log n) best and average case
+// Space complexity -> O(n) worst case (when the tree is highly skewed, and it is basically like a linked list)
+
+// Using pre-order traversal and recursion
 function isValidBST(currentNode) {
   const left = currentNode?.left;
   const right = currentNode?.right;
-  // if the current node is a leaf node or it's null then that means the subtree matches that of a BST
+  // if the current node is a leaf node or it's null then that means the subtree is a valid BST
   if ((!left && !right) || !currentNode) return true;
   // compare the left and right child nodes with the current node
   if (
@@ -80,3 +83,20 @@ function isValidBST(currentNode) {
 
 console.log(isValidBST(validBST.root));
 console.log(isValidBST(invalidBST.root));
+
+function isValidBST2(currentNode, min, max) {
+  if (!currentNode) return true;
+  // the current node's value must be within the min and max range
+  // all the values in the left subtree must be smaller than the max
+  // all the values in the right subtree must be greater than the min
+  if ((min && currentNode.value <= min) || (max && currentNode.value >= max)) {
+    return false;
+  }
+  return (
+    isValidBST2(currentNode.left, min, currentNode.value) &&
+    isValidBST2(currentNode.right, currentNode.value, max)
+  );
+}
+
+console.log(isValidBST2(validBST.root, -Infinity, Infinity));
+console.log(isValidBST2(invalidBST.root, -Infinity, Infinity));
