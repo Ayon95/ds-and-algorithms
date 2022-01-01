@@ -60,12 +60,56 @@ const validBST = {
   },
 };
 
+const invalidBST2 = {
+  root: {
+    value: 10,
+    left: {
+      value: 5,
+      left: {
+        value: 1,
+        left: null,
+        right: null,
+      },
+      right: {
+        value: 12,
+        left: null,
+        right: null,
+      },
+    },
+    right: {
+      value: 15,
+      left: null,
+      right: null,
+    },
+  },
+};
+
 // Time complexity -> O(n)
 // Space complexity -> O(log n) best and average case
 // Space complexity -> O(n) worst case (when the tree is highly skewed, and it is basically like a linked list)
 
 // Using pre-order traversal and recursion
-function isValidBST(currentNode) {
+// this algorithm keeps track of the current min and max values as it traverses the tree
+function isValidBST(currentNode, min, max) {
+  if (!currentNode) return true;
+  // the current node's value must be within the min and max range
+  // all the values in the left subtree must be smaller than the max
+  // all the values in the right subtree must be greater than the min
+  if ((min && currentNode.value <= min) || (max && currentNode.value >= max)) {
+    return false;
+  }
+  return (
+    isValidBST(currentNode.left, min, currentNode.value) &&
+    isValidBST(currentNode.right, currentNode.value, max)
+  );
+}
+
+console.log(isValidBST(validBST.root, -Infinity, Infinity));
+console.log(isValidBST(invalidBST.root, -Infinity, Infinity));
+console.log(isValidBST(invalidBST2.root, -Infinity, Infinity));
+
+// this algorithm will not work in some cases where an incorrect node is present farther down the tree even if that node is correct relative to its immediate parent
+function isValidBST2(currentNode) {
   const left = currentNode?.left;
   const right = currentNode?.right;
   // if the current node is a leaf node or it's null then that means the subtree is a valid BST
@@ -78,25 +122,10 @@ function isValidBST(currentNode) {
     return false;
   }
   // check if the left and right subtrees satisfy the conditions of a BST
-  return isValidBST(currentNode.left) && isValidBST(currentNode.right);
+  return isValidBST2(currentNode.left) && isValidBST2(currentNode.right);
 }
 
-console.log(isValidBST(validBST.root));
-console.log(isValidBST(invalidBST.root));
-
-function isValidBST2(currentNode, min, max) {
-  if (!currentNode) return true;
-  // the current node's value must be within the min and max range
-  // all the values in the left subtree must be smaller than the max
-  // all the values in the right subtree must be greater than the min
-  if ((min && currentNode.value <= min) || (max && currentNode.value >= max)) {
-    return false;
-  }
-  return (
-    isValidBST2(currentNode.left, min, currentNode.value) &&
-    isValidBST2(currentNode.right, currentNode.value, max)
-  );
-}
-
-console.log(isValidBST2(validBST.root, -Infinity, Infinity));
-console.log(isValidBST2(invalidBST.root, -Infinity, Infinity));
+console.log(isValidBST2(validBST.root));
+console.log(isValidBST2(invalidBST.root));
+// this will give an incorrect result
+console.log(isValidBST2(invalidBST2.root));
