@@ -89,6 +89,8 @@ class LinkedList {
   // this method traverses to the node at the specified index and returns that node
   // worst-case time complexity is O(n)
   _traverseAndGetNode(index) {
+    // you can either use _validateIndex() or perform the check here
+    if (index < 0 || index > this.length - 1) return undefined;
     if (index === 0) return this.head;
     if (index === this.length - 1) return this.tail;
 
